@@ -74,7 +74,8 @@ class Runner():
     def __init__(self, args, no_pty=False, line_break="\n"):
         #print "args: %s" % repr(args)
         self.no_pty = no_pty
-
+        log(os.listdir())
+        log(args)
         # Cleanup child process on exit
         atexit.register(self.cleanup)
 

@@ -31,7 +31,8 @@ fn read(str: &str) -> MalRet {
 
 // eval
 fn eval_ast(ast: &MalVal, env: &Env) -> MalRet {
-    match ast {
+    dbg!(&ast);
+    let r = match ast {
         Sym(_) => Ok(env_get(&env, &ast)?),
         List(v, _) => {
             let mut lst: MalArgs = vec![];
@@ -55,10 +56,12 @@ fn eval_ast(ast: &MalVal, env: &Env) -> MalRet {
             Ok(Hash(Rc::new(new_hm), Rc::new(Nil)))
         }
         _ => Ok(ast.clone()),
-    }
+    };
+    dbg!(r)
 }
 
 fn eval(ast: MalVal, env: Env) -> MalRet {
+    dbg!(&ast);
     match ast.clone() {
         List(l, _) => {
             if l.len() == 0 {
@@ -139,7 +142,9 @@ fn print(ast: &MalVal) -> String {
 
 fn rep(str: &str, env: &Env) -> Result<String, MalErr> {
     let ast = read(str)?;
+    dbg!(&ast);
     let exp = eval(ast, env.clone())?;
+    // dbg!(&exp);
     Ok(print(&exp))
 }
 
